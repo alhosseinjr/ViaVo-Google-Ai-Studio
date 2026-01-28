@@ -1,0 +1,7 @@
+{
+  "name": "ViaVo - AI Virtual Try-On",
+  "description": "A professional AI-powered virtual try-on platform that allows users to visualize clothing items on themselves with realistic 3D-like rendering and personalized size recommendations.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
