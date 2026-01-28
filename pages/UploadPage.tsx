@@ -16,59 +16,58 @@ const UploadPage: React.FC = () => {
   const canContinue = session.facePhoto && session.bodyPhoto;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
-      <div className="text-center mb-12 space-y-3">
-        <h2 className="text-3xl font-display font-bold text-gray-900">Upload Your Profile</h2>
-        <p className="text-gray-500">To provide accurate results, we require two specific photos.</p>
+    <div className="max-w-5xl mx-auto px-6 py-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="max-w-2xl mb-20 space-y-4">
+        <h2 className="text-4xl md:text-6xl font-display font-bold text-black tracking-tighter uppercase">Anatomical <br />Scan</h2>
+        <p className="text-gray-500 text-lg font-medium">Define your digital silhouette. We require high-resolution captures of your face and full form to generate your virtual twin.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
         <FileUpload 
-          label="Face Photo" 
-          description="Square, clear, front-facing"
+          label="Portrait" 
+          description="Clear front-facing capture"
           value={session.facePhoto}
           onUpload={handleFaceUpload}
           onRemove={handleFaceRemove}
         />
         <FileUpload 
-          label="Full Body Photo" 
-          description="Head to toe, standing straight"
+          label="Full Physique" 
+          description="Standing pose, neutral background"
           value={session.bodyPhoto}
           onUpload={handleBodyUpload}
           onRemove={handleBodyRemove}
         />
       </div>
 
-      <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 mb-12">
-        <div className="flex gap-4">
-          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-blue-600 flex-shrink-0">
-            <Info size={20} />
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+        <div className="md:col-span-8 bg-gray-50 rounded-[40px] p-10 flex gap-8 items-start">
+          <div className="w-12 h-12 bg-black rounded-2xl flex items-center justify-center text-white flex-shrink-0">
+            <Info size={24} />
           </div>
-          <div className="space-y-2">
-            <h4 className="font-bold text-blue-900">For Best Results</h4>
-            <ul className="text-sm text-blue-700 space-y-1 list-disc list-inside">
-              <li>Wear form-fitting clothing for the body photo.</li>
-              <li>Ensure good lighting without harsh shadows.</li>
-              <li>Keep the background as neutral as possible.</li>
-              <li>Stand directly facing the camera.</li>
+          <div className="space-y-4">
+            <h4 className="text-xs font-black text-black uppercase tracking-widest">Scanning Protocol</h4>
+            <ul className="text-sm text-gray-500 space-y-2 font-medium">
+              <li>• Wear form-fitting attire for precise body mapping.</li>
+              <li>• Ensure diffuse, even lighting across the subject.</li>
+              <li>• Maintain a neutral, unobstructed background.</li>
+              <li>• Stand upright, arms slightly away from the torso.</li>
             </ul>
           </div>
         </div>
-      </div>
 
-      <div className="flex justify-end">
-        <button
-          disabled={!canContinue}
-          onClick={() => setStep(AppStep.PRODUCTS)}
-          className={`px-10 py-4 rounded-2xl font-bold flex items-center gap-2 transition-all ${
-            canContinue 
-              ? 'bg-blue-600 text-white shadow-xl shadow-blue-200 hover:bg-blue-700 hover:-translate-y-0.5' 
-              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-          }`}
-        >
-          Continue to Products
-          <ArrowRight size={20} />
-        </button>
+        <div className="md:col-span-4 flex justify-end">
+          <button
+            disabled={!canContinue}
+            onClick={() => setStep(AppStep.PRODUCTS)}
+            className={`w-full py-6 rounded-full font-black text-xs uppercase tracking-widest transition-all ${
+              canContinue 
+                ? 'bg-black text-white shadow-2xl shadow-black/20 hover:-translate-y-1' 
+                : 'bg-gray-100 text-gray-300 cursor-not-allowed'
+            }`}
+          >
+            Confirm & Continue
+          </button>
+        </div>
       </div>
     </div>
   );

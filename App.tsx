@@ -18,15 +18,28 @@ const StepTransition: React.FC<{ children: React.ReactNode; currentStep: AppStep
       const timer = setTimeout(() => {
         setDisplayStep(currentStep);
         setIsTransitioning(false);
-      }, 400); // Sync with CSS duration
+      }, 500);
       return () => clearTimeout(timer);
     }
   }, [currentStep]);
 
   return (
-    <div className={`transition-all duration-500 ease-in-out ${isTransitioning ? 'opacity-0 translate-y-4 scale-95' : 'opacity-100 translate-y-0 scale-100'}`}>
+    <div className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${isTransitioning ? 'opacity-0 translate-y-10 blur-xl scale-[0.98]' : 'opacity-100 translate-y-0 blur-0 scale-100'}`}>
       {children}
     </div>
+  );
+};
+
+const BackgroundEffects: React.FC = () => {
+  return (
+    <>
+      <div className="bg-grid" />
+      <div className="bg-blob bg-blob-1" />
+      <div className="bg-blob bg-blob-2" />
+      <div className="bg-blob bg-blob-3" />
+      {/* Structural Grain Overlay for high-end look */}
+      <div className="fixed inset-0 -z-10 pointer-events-none opacity-[0.04] mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/p6.png')]" />
+    </>
   );
 };
 
@@ -44,16 +57,14 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden">
+    <div className="min-h-screen bg-white selection:bg-black selection:text-white overflow-x-hidden font-sans">
+      <BackgroundEffects />
       <Header />
-      <main className="relative pt-8">
+      <main className="relative">
         <StepTransition currentStep={currentStep}>
           {renderStep()}
         </StepTransition>
       </main>
-      
-      {/* Dynamic Professional Backgrounds */}
-      <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.05),transparent_50%),radial-gradient(circle_at_bottom_left,rgba(99,102,241,0.03),transparent_40%)]" />
     </div>
   );
 };

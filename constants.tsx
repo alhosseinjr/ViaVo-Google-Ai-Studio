@@ -1,17 +1,18 @@
 
 import { Product } from './types';
 
+// Using direct download/view links for Google Drive images
 export const PRODUCTS: Product[] = [
   {
     id: 'p1',
-    name: 'Stealth Ribbed Henley',
-    brand: 'ViaVo Core',
+    name: 'Long-Sleeve Ribbed Henley',
+    brand: 'Y.STUDIOS',
     category: 'tops',
-    price: 58,
-    description: 'A deep black, long-sleeve henley crafted from ultra-soft ribbed cotton. Featuring a three-button placket and a silhouette-defining fit.',
-    imageUrl: 'https://images.unsplash.com/photo-1626497748470-281923f935f5?auto=format&fit=crop&q=80&w=800',
+    price: 650,
+    description: 'A premium slim-fit henley in deep matte black. Features a textured rib-knit and a sophisticated three-button neckline.',
+    imageUrl: 'https://lh3.googleusercontent.com/d/1AvziUO4gRt6I417YsyCmwKugJ0ddzpig',
     sizes: ['S', 'M', 'L', 'XL'],
-    colors: [{ name: 'Onyx Black', hex: '#0a0a0a' }],
+    colors: [{ name: 'Matte Black', hex: '#000000' }],
     gender: 'men',
     measurements: {
       'S': { chest: 92, length: 68 },
@@ -22,14 +23,14 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'p2',
-    name: 'Varsity Heritage V-Neck',
-    brand: 'Ivy Collective',
+    name: 'Varsity Cable-Knit Sweater',
+    brand: 'Y.STUDIOS',
     category: 'tops',
-    price: 145,
-    description: 'Classic ivory cable-knit sweater with distinctive green-striped V-neck trim. A timeless piece that bridges the gap between athletic heritage and modern luxury.',
-    imageUrl: 'https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?auto=format&fit=crop&q=80&w=800',
+    price: 1150,
+    description: 'Classic ivory cable-knit sweater with a deep V-neck and emerald green varsity stripes. Crafted for a relaxed, timeless silhouette.',
+    imageUrl: 'https://lh3.googleusercontent.com/d/1zvrF7wML06yLz3hLQrPMbdIM572qZRjN',
     sizes: ['XS', 'S', 'M', 'L'],
-    colors: [{ name: 'Cream / Forest', hex: '#fdfcf0' }],
+    colors: [{ name: 'Cream / Green', hex: '#fdfcf0' }],
     gender: 'unisex',
     measurements: {
       'XS': { chest: 88, length: 64 },
@@ -40,14 +41,14 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'p3',
-    name: 'Architectural Wide-Leg Trouser',
-    brand: 'ViaVo Studio',
+    name: 'Wide-Leg Pleated Trouser',
+    brand: 'Y.STUDIOS',
     category: 'bottoms',
-    price: 180,
-    description: 'High-waisted black trousers with double-front pleats and a dramatic wide-leg drape. Designed to create a commanding, professional silhouette.',
-    imageUrl: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&q=80&w=800',
+    price: 850,
+    description: 'Sophisticated wide-leg trousers in jet black with crisp double pleats. Designed to create a dramatic yet tailored high-fashion look.',
+    imageUrl: 'https://lh3.googleusercontent.com/d/1FuV0hGxJQlmNZifr9xv3vwuD_mh0xydx',
     sizes: ['28', '30', '32', '34', '36'],
-    colors: [{ name: 'Matte Black', hex: '#111111' }],
+    colors: [{ name: 'Jet Black', hex: '#000000' }],
     gender: 'unisex',
     measurements: {
       '28': { waist: 71, length: 104 },
@@ -59,14 +60,14 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'p4',
-    name: 'Cashmere Knit Polo',
-    brand: 'ViaVo Premium',
+    name: 'Textured Knit Polo',
+    brand: 'Y.STUDIOS',
     category: 'tops',
-    price: 120,
-    description: 'A refined grey knit polo featuring a soft, heathered texture and a structured collar. The ultimate "elevated basic" for professional versatility.',
-    imageUrl: 'https://images.unsplash.com/photo-1614975058789-41316d0e2e9c?auto=format&fit=crop&q=80&w=800',
+    price: 850,
+    description: 'Refined heather grey polo sweater with a three-button collar. A versatile staple that combines the comfort of a sweater with the structure of a polo.',
+    imageUrl: 'https://lh3.googleusercontent.com/d/1F2hBadEUCPy8BU1Ip5qxLGVzP7Htqz-x',
     sizes: ['S', 'M', 'L', 'XL'],
-    colors: [{ name: 'Heather Grey', hex: '#a1a1aa' }],
+    colors: [{ name: 'Heather Grey', hex: '#9ca3af' }],
     gender: 'men',
     measurements: {
       'S': { chest: 96, length: 68 },

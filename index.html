@@ -12,24 +12,83 @@
     <style>
       body {
         font-family: 'Inter', sans-serif;
-        background-color: #f9fafb;
-        color: #111827;
+        background-color: #ffffff;
+        color: #000000;
+        overflow-x: hidden;
       }
       .font-display {
         font-family: 'Outfit', sans-serif;
       }
+      
+      /* Professional Background Animations */
+      @keyframes float {
+        0% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0, 0) scale(1); }
+      }
+
+      @keyframes pulse-soft {
+        0%, 100% { opacity: 0.1; }
+        50% { opacity: 0.15; }
+      }
+
+      .bg-blob {
+        position: fixed;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        filter: blur(100px);
+        z-index: -1;
+        animation: float 25s infinite ease-in-out;
+        pointer-events: none;
+      }
+
+      .bg-blob-1 {
+        background: rgba(0, 0, 0, 0.03);
+        top: -100px;
+        right: -100px;
+        animation-delay: 0s;
+      }
+
+      .bg-blob-2 {
+        background: rgba(0, 0, 0, 0.02);
+        bottom: -150px;
+        left: -150px;
+        animation-delay: -5s;
+        width: 800px;
+        height: 800px;
+      }
+
+      .bg-blob-3 {
+        background: rgba(0, 0, 0, 0.015);
+        top: 40%;
+        left: 30%;
+        width: 400px;
+        height: 400px;
+        animation-delay: -10s;
+        animation-duration: 30s;
+      }
+
+      /* Grid Pattern Overlay */
+      .bg-grid {
+        position: fixed;
+        inset: 0;
+        background-image: radial-gradient(circle, #000 0.5px, transparent 0.5px);
+        background-size: 40px 40px;
+        opacity: 0.05;
+        z-index: -2;
+        pointer-events: none;
+      }
+
       ::-webkit-scrollbar {
-        width: 8px;
+        width: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: #f1f1f1;
+        background: #ffffff;
       }
       ::-webkit-scrollbar-thumb {
-        background: #d1d5db;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #9ca3af;
+        background: #000000;
       }
     </style>
   <script type="importmap">
