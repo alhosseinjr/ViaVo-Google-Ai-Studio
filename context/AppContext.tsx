@@ -6,7 +6,8 @@ interface AppContextType {
   session: TryOnSession;
   currentStep: AppStep;
   setStep: (step: AppStep) => void;
-  updatePhotos: (face: string | null, body: string | null) => void;
+  setFacePhoto: (base64: string | null) => void;
+  setBodyPhoto: (base64: string | null) => void;
   selectProduct: (product: Product, options: { size: string; color: string }) => void;
   removeProduct: (productId: string) => void;
   setResult: (image: string, analysis: BodyAnalysis, recommendations: SizeRecommendation[]) => void;
@@ -31,8 +32,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const setStep = (step: AppStep) => setCurrentStep(step);
 
-  const updatePhotos = (face: string | null, body: string | null) => {
-    setSession(prev => ({ ...prev, facePhoto: face, bodyPhoto: body }));
+  const setFacePhoto = (face: string | null) => {
+    setSession(prev => ({ ...prev, facePhoto: face }));
+  };
+
+  const setBodyPhoto = (body: string | null) => {
+    setSession(prev => ({ ...prev, bodyPhoto: body }));
   };
 
   const selectProduct = (product: Product, options: { size: string; color: string }) => {
@@ -76,7 +81,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       session,
       currentStep,
       setStep,
-      updatePhotos,
+      setFacePhoto,
+      setBodyPhoto,
       selectProduct,
       removeProduct,
       setResult,
