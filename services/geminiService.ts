@@ -1,6 +1,6 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { BodyAnalysis, SizeRecommendation, Product } from "../types";
+import { BodyAnalysis, SizeRecommendation, Product, FitMetric } from "../types";
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
 
@@ -16,17 +16,9 @@ export const analyzeBody = async (bodyPhotoBase64: string): Promise<BodyAnalysis
   if (!base64Data) throw new Error("Invalid photo data.");
 
   const prompt = `
-    Analyze this full body photo for a virtual try-on system.
-    Return JSON:
-    {
-      "heightRange": "string",
-      "bodyType": "string",
-      "chestCm": number,
-      "waistCm": number,
-      "shoulderWidth": "string",
-      "proportions": "string",
-      "confidence": number
-    }
+    Analyze this full body photo for a professional virtual try-on system.
+    Return JSON with anatomical measurements and fit metrics.
+    Fit metrics should reflect how standard clothing sits on this specific body type.
   `;
 
   const response = await ai.models.generateContent({
@@ -48,9 +40,21 @@ export const analyzeBody = async (bodyPhotoBase64: string): Promise<BodyAnalysis
           waistCm: { type: Type.NUMBER },
           shoulderWidth: { type: Type.STRING },
           proportions: { type: Type.STRING },
-          confidence: { type: Type.NUMBER }
+          confidence: { type: Type.NUMBER },
+          fitMetrics: {
+            type: Type.ARRAY,
+            items: {
+              type: Type.OBJECT,
+              properties: {
+                label: { type: Type.STRING },
+                value: { type: Type.NUMBER },
+                status: { type: Type.STRING, enum: ['optimal', 'tight', 'loose'] }
+              },
+              required: ["label", "value", "status"]
+            }
+          }
         },
-        required: ["heightRange", "bodyType", "chestCm", "waistCm", "shoulderWidth", "proportions", "confidence"]
+        required: ["heightRange", "bodyType", "chestCm", "waistCm", "shoulderWidth", "proportions", "confidence", "fitMetrics"]
       }
     }
   });
@@ -74,17 +78,14 @@ export const generateTryOnResult = async (
   }).join(", ");
 
   const prompt = `
-    TASK: Generate a photorealistic studio catalog image.
+    TASK: Generate a high-resolution photorealistic studio catalog image.
     
     CRITICAL REQUIREMENTS:
-    1. BACKGROUND: Pure, blank, solid white background (#FFFFFF). Absolutely NO shadows on the background, NO environment, NO floor lines.
-    2. SUBJECT: Use the EXACT face and facial features from the face photo provided. Use the exact body shape and pose from the body photo.
-    3. CLOTHING: The person MUST be wearing these specific items: ${productInfo}.
-    4. SIZE REPRESENTATION: 
-       - If a size is 'XL' or 'L', show the garment with a slightly relaxed, oversized drape.
-       - If a size is 'S' or 'XS', show the garment with a sharp, fitted look.
-    5. STYLE: High-end fashion editorial style. Sharp focus, professional studio lighting.
-    6. RESULT: Just the person standing centered on a blank white void.
+    1. BACKGROUND: Pure, solid white background (#FFFFFF).
+    2. SUBJECT: Exact face from the face photo. Exact body shape and pose from the body photo.
+    3. CLOTHING: Person wearing: ${productInfo}.
+    4. PHYSICS: Ensure fabric folds and shadows match the pose accurately.
+    5. STYLE: Luxury fashion editorial.
   `;
 
   const response = await ai.models.generateContent({
@@ -109,7 +110,7 @@ export const generateTryOnResult = async (
     }
   }
 
-  if (!imageUrl) throw new Error("AI Generation failed. Please try again.");
+  if (!imageUrl) throw new Error("AI Synthesis failed.");
   return imageUrl;
 };
 
@@ -128,7 +129,7 @@ export const getRecommendations = (analysis: BodyAnalysis, products: Product[]):
       productId: product.id,
       recommendedSize: bestSize,
       confidence: 0.95,
-      reasoning: `Based on your ${analysis.bodyType} build, size ${bestSize} will provide a clean, architectural silhouette.`
+      reasoning: `Matched to your ${analysis.chestCm}cm chest measurement and ${analysis.bodyType} build.`
     };
   });
 };

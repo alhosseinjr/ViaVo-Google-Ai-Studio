@@ -1,8 +1,8 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import { AppStep } from '../types';
-import { Share2, Download, RefreshCw, Ruler, Zap, ShieldCheck, Maximize2, ZoomIn, ZoomOut, Move } from 'lucide-react';
+import { Share2, Download, RefreshCw, Zap, Maximize2, ZoomIn, ZoomOut, Move, Info, ShieldCheck } from 'lucide-react';
 
 const ResultsPage: React.FC = () => {
   const { session, setStep, resetSession } = useApp();
@@ -15,7 +15,7 @@ const ResultsPage: React.FC = () => {
   if (!session.resultImage || !session.analysis) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
-        <button onClick={resetSession} className="bg-black text-white px-12 py-5 font-black uppercase tracking-widest">Restart Studio</button>
+        <button onClick={resetSession} className="bg-black text-white px-12 py-5 font-black uppercase tracking-widest">Restart Session</button>
       </div>
     );
   }
@@ -48,12 +48,12 @@ const ResultsPage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-6 py-20 animate-in fade-in slide-in-from-bottom-8 duration-1000">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 items-start">
         
-        {/* Interactive 3D Viewer */}
+        {/* Interactive Neural Viewer */}
         <div className="lg:col-span-7 space-y-12">
           <div className="relative group">
             <div 
               ref={containerRef}
-              className="relative aspect-[4/5] overflow-hidden bg-white ring-1 ring-gray-100 shadow-[0_80px_160px_-40px_rgba(0,0,0,0.1)] cursor-grab active:cursor-grabbing"
+              className="relative aspect-[4/5] overflow-hidden bg-white ring-1 ring-gray-100 shadow-[0_80px_160px_-40px_rgba(0,0,0,0.1)] cursor-grab active:cursor-grabbing border border-gray-100"
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}
@@ -61,7 +61,7 @@ const ResultsPage: React.FC = () => {
             >
               <img 
                 src={session.resultImage} 
-                alt="AI Generated Silhouette" 
+                alt="Neural Synthesis" 
                 className="w-full h-full object-contain transition-transform duration-200 ease-out select-none"
                 style={{ 
                   transform: `scale(${zoom}) translate(${position.x / zoom}px, ${position.y / zoom}px)`,
@@ -85,68 +85,100 @@ const ResultsPage: React.FC = () => {
                   <Maximize2 size={20} />
                 </button>
               </div>
-
-              {zoom > 1 && (
-                <div className="absolute top-12 left-12 bg-black text-white p-4 font-black text-[10px] uppercase tracking-widest flex items-center gap-3 animate-in fade-in zoom-in duration-500">
-                  <Move size={14} /> Navigate Silhouette
-                </div>
-              )}
             </div>
           </div>
           
           <div className="grid grid-cols-2 gap-8">
-            <button className="h-20 bg-white border border-black text-black font-black text-xs uppercase tracking-[0.3em] flex items-center justify-center gap-4 hover:bg-black hover:text-white transition-all">
-              <Download size={20} />
-              Save Capture
+            <button className="h-20 bg-white border-2 border-black text-black font-black text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-4 hover:bg-black hover:text-white transition-all">
+              <Download size={18} />
+              Export Session
             </button>
-            <button className="h-20 bg-white border border-black text-black font-black text-xs uppercase tracking-[0.3em] flex items-center justify-center gap-4 hover:bg-black hover:text-white transition-all">
-              <Share2 size={20} />
-              Distribute
+            <button className="h-20 bg-white border-2 border-black text-black font-black text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-4 hover:bg-black hover:text-white transition-all">
+              <Share2 size={18} />
+              Share Visuals
             </button>
           </div>
         </div>
 
         {/* Intelligence Side Panel */}
         <div className="lg:col-span-5 space-y-16">
-          <div className="space-y-6">
-            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-gray-100 text-black text-[10px] font-black uppercase tracking-[0.3em]">
-              <Zap size={12} /> Neural Fit Validated
+          <div className="space-y-8">
+            <div className="flex items-center justify-between">
+              <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-black text-white text-[10px] font-black uppercase tracking-[0.3em]">
+                <Zap size={12} /> Fit Intelligence Report
+              </div>
+              <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                <ShieldCheck size={14} className="text-green-500" />
+                Verified Anatomy
+              </div>
             </div>
-            <h2 className="text-6xl md:text-7xl font-display font-bold text-black tracking-tighter leading-none uppercase">YOUR <br />VIRTUAL <br />SILHOUETTE.</h2>
-            <p className="text-gray-400 text-xl font-medium leading-relaxed">
-              Synthesized using your {session.analysis.bodyType} anatomy. We have accurately mapped the fabric tension to your unique bone structure and posture.
-            </p>
+            
+            <h2 className="text-6xl md:text-7xl font-display font-bold text-black tracking-tighter leading-none uppercase">VIRTUAL <br />SILHOUETTE.</h2>
+            
+            <div className="grid grid-cols-2 gap-8 pt-8 border-t border-gray-100">
+              <div className="space-y-1">
+                <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest">Body Type</p>
+                <p className="text-xl font-bold text-black uppercase tracking-tight">{session.analysis.bodyType}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest">Neural Conf.</p>
+                <p className="text-xl font-bold text-black uppercase tracking-tight">{Math.round(session.analysis.confidence * 100)}%</p>
+              </div>
+            </div>
           </div>
 
-          <div className="space-y-10">
-            <h3 className="text-[10px] font-black text-gray-300 uppercase tracking-[0.4em]">PRECISION METRICS</h3>
-            <div className="space-y-6">
-              {session.recommendations.map((rec) => {
-                const product = session.selectedProducts.find(p => p.id === rec.productId);
-                return (
-                  <div key={rec.productId} className="p-10 bg-white border border-gray-100 flex items-center justify-between group hover:border-black transition-all">
-                    <div className="flex items-center gap-8">
-                      <div className="w-20 h-20 bg-gray-50 overflow-hidden">
-                        <img src={product?.imageUrl} className="w-full h-full object-cover transition-all duration-700" alt="" />
-                      </div>
-                      <div className="space-y-1">
-                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">{product?.brand}</p>
-                        <p className="text-xl font-bold text-black uppercase tracking-tight">{product?.name}</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mb-1">OPTIMAL FIT</p>
-                      <p className="text-4xl font-display font-bold text-black transition-transform origin-right">{rec.recommendedSize}</p>
-                    </div>
+          {/* Fit Metrics Dashboard */}
+          <div className="space-y-8 p-10 bg-black text-white rounded-[40px] shadow-2xl">
+            <div className="flex items-center justify-between">
+              <h3 className="text-[10px] font-black uppercase tracking-[0.4em]">Fabric Tension Analysis</h3>
+              <Info size={16} className="text-gray-500" />
+            </div>
+            <div className="space-y-8">
+              {session.analysis.fitMetrics.map((metric, i) => (
+                <div key={i} className="space-y-3">
+                  <div className="flex justify-between items-end">
+                    <span className="text-[10px] font-black uppercase tracking-widest">{metric.label}</span>
+                    <span className={`text-[10px] font-black uppercase tracking-widest ${
+                      metric.status === 'optimal' ? 'text-green-400' : 'text-orange-400'
+                    }`}>
+                      {metric.status}
+                    </span>
                   </div>
-                );
-              })}
+                  <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                    <div 
+                      className={`h-full transition-all duration-1000 delay-300 ${
+                        metric.status === 'optimal' ? 'bg-white' : 'bg-orange-400'
+                      }`}
+                      style={{ width: `${metric.value}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-8">
+            <h3 className="text-[10px] font-black text-gray-300 uppercase tracking-[0.4em]">SIZE RECOMMENDATIONS</h3>
+            <div className="space-y-4">
+              {session.recommendations.map((rec) => (
+                <div key={rec.productId} className="p-8 bg-white border border-gray-100 flex items-center justify-between group hover:border-black transition-all">
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                      {session.selectedProducts.find(p => p.id === rec.productId)?.name}
+                    </p>
+                    <p className="text-sm font-medium text-gray-500 max-w-[200px] leading-snug">{rec.reasoning}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-4xl font-display font-bold text-black">{rec.recommendedSize}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
           <button 
             onClick={() => setStep(AppStep.PRODUCTS)}
-            className="w-full h-24 bg-black text-white font-black text-xs uppercase tracking-[0.4em] flex items-center justify-center gap-6 hover:bg-gray-800 transition-all shadow-[0_40px_80px_-20px_rgba(0,0,0,0.3)]"
+            className="w-full h-24 bg-black text-white font-black text-xs uppercase tracking-[0.4em] flex items-center justify-center gap-6 hover:bg-gray-800 transition-all shadow-2xl"
           >
             <RefreshCw size={24} strokeWidth={3} />
             Modify Parameters

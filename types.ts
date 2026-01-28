@@ -20,6 +20,12 @@ export interface ProductMeasurements {
   shoulders?: number;
 }
 
+export interface FitMetric {
+  label: string;
+  value: number; // 0-100
+  status: 'optimal' | 'tight' | 'loose';
+}
+
 export interface BodyAnalysis {
   heightRange: string;
   bodyType: string;
@@ -28,6 +34,7 @@ export interface BodyAnalysis {
   shoulderWidth: string;
   proportions: string;
   confidence: number;
+  fitMetrics: FitMetric[];
 }
 
 export interface SizeRecommendation {
